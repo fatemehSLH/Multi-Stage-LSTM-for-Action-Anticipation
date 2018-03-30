@@ -47,13 +47,13 @@ parser.add_argument(
     "--temporal-length",
     default=50,
     type=int,
-    elp="number of frames representing each video")
+    help="number of frames representing each video")
 
 parser.add_argument(
     "--split",
     default='1',
     type=str,
-    elp="the split")
+    help="the split")
 
 parser.add_argument(
     "--output",
@@ -73,7 +73,7 @@ args = parser.parse_args()
 model_action = vgg_action(args.classes, input_shape=(args.fixed_width,args.fixed_width,3))
 model_action.load_weights(args.model_action)
 
-model_context = vgg_action(args.classes, input_shape=(args.fixed_width,args.fixed_width,3))
+model_context = vgg_context(args.classes, input_shape=(args.fixed_width,args.fixed_width,3))
 model_context.load_weights(args.model_context)
 
 context_aware = K.function([model_context.layers[0].input, K.learning_phase()], [model_context.layers[22].output])
